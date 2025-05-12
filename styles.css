@@ -562,9 +562,9 @@ p {
 
 .contact__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--spacing-xl);
-    padding: 0 var(--container-padding);
+    padding: var(--spacing-lg);
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -572,12 +572,15 @@ p {
         0 4px 20px rgba(0, 0, 0, 0.1),
         0 0 0 1px rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
+    max-width: var(--container-width);
+    margin: 0 auto;
 }
 
 .contact__info {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-md);
+    width: 100%;
 }
 
 .contact__card {
@@ -590,23 +593,9 @@ p {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    opacity: 0;
-    transform: translateY(30px) scale(0.98);
-    transition: all 0.4s cubic-bezier(0.2, 0, 0.1, 1);
-    will-change: transform, opacity;
-}
-
-.contact__card.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-.contact__card:nth-child(odd) {
-    transition-delay: 0.1s;
-}
-
-.contact__card:nth-child(even) {
-    transition-delay: 0.2s;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 .contact__card:hover {
@@ -643,8 +632,9 @@ p {
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
+    width: 100%;
 }
 
 .form__group {
@@ -1086,5 +1076,34 @@ p {
     .service-card:nth-child(odd),
     .service-card:nth-child(even) {
         transition-delay: 0s;
+    }
+}
+
+@media (min-width: 768px) {
+    .contact__grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .contact__info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .contact__grid {
+        padding: var(--spacing-md);
+        gap: var(--spacing-md);
+    }
+    
+    .contact__info {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact__card {
+        padding: var(--spacing-md);
+    }
+    
+    .contact__form {
+        padding: var(--spacing-md);
     }
 } 
