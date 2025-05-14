@@ -183,4 +183,124 @@ if (messengerBtn) {
             overlay.remove();
         }, 1000);
     });
-} 
+}
+
+// Gallery Carousel
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.gallery__track');
+    const items = document.querySelectorAll('.gallery__item');
+    const prevButton = document.querySelector('.gallery__button--prev');
+    const nextButton = document.querySelector('.gallery__button--next');
+    const dotsContainer = document.querySelector('.gallery__dots');
+    
+    let currentIndex = 0;
+    let itemsPerView = 4;
+    let autoScrollInterval;
+    
+    // Create dots
+    const totalDots = Math.ceil(items.length / itemsPerView);
+    for (let i = 0; i < totalDots; i++) {
+        const dot = document.createElement('button');
+        dot.classList.add('gallery__dot');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dotsContainer.appendChild(dot);
+    }
+    
+    const dots = document.querySelectorAll('.gallery__dot');
+    
+    // Update dots
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    // Update active items
+    function updateActiveItems() {
+        items.forEach((item, index) => {
+            const isActive = index >= currentIndex * itemsPerView && 
+                           index < (currentIndex * itemsPerView) + itemsPerView;
+            item.classList.toggle('active', isActive);
+        });
+    }
+    
+    // Scroll to position
+    function scrollToPosition(index) {
+        const itemWidth = items[0].offsetWidth + parseInt(getComputedStyle(items[0]).marginRight);
+        track.style.transform = `translateX(-${index * itemWidth * itemsPerView}px)`;
+        currentIndex = index;
+        updateDots();
+        updateActiveItems();
+    }
+    
+    // Next slide
+    function nextSlide() {
+        const maxIndex = Math.ceil(items.length / itemsPerView) - 1;
+        currentIndex = currentIndex === maxIndex ? 0 : currentIndex + 1;
+        scrollToPosition(currentIndex);
+    }
+    
+    // Previous slide
+    function prevSlide() {
+        const maxIndex = Math.ceil(items.length / itemsPerView) - 1;
+        currentIndex = currentIndex === 0 ? maxIndex : currentIndex - 1;
+        scrollToPosition(currentIndex);
+    }
+    
+    // Auto scroll
+    function startAutoScroll() {
+        stopAutoScroll();
+        autoScrollInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    }
+    
+    function stopAutoScroll() {
+        if (autoScrollInterval) {
+            clearInterval(autoScrollInterval);
+        }
+    }
+    
+    // Event listeners
+    nextButton.addEventListener('click', () => {
+        nextSlide();
+        startAutoScroll(); // Reset timer when manually changing slides
+    });
+    
+    prevButton.addEventListener('click', () => {
+        prevSlide();
+        startAutoScroll(); // Reset timer when manually changing slides
+    });
+    
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            scrollToPosition(index);
+            startAutoScroll(); // Reset timer when manually changing slides
+        });
+    });
+    
+    // Pause auto-scroll on hover
+    track.addEventListener('mouseenter', stopAutoScroll);
+    track.addEventListener('mouseleave', startAutoScroll);
+    
+    // Update items per view based on screen size
+    function updateItemsPerView() {
+        if (window.innerWidth <= 480) {
+            itemsPerView = 1;
+        } else if (window.innerWidth <= 768) {
+            itemsPerView = 2;
+        } else if (window.innerWidth <= 1024) {
+            itemsPerView = 3;
+        } else {
+            itemsPerView = 4;
+        }
+        scrollToPosition(0); // Reset position when screen size changes
+    }
+    
+    // Initialize
+    updateItemsPerView();
+    updateDots();
+    updateActiveItems();
+    startAutoScroll();
+    
+    // Update on window resize
+    window.addEventListener('resize', updateItemsPerView);
+}); 
