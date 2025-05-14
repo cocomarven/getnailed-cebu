@@ -652,12 +652,14 @@ p {
     grid-template-columns: 1.5fr 1fr;
     gap: var(--spacing-xl);
     padding: 0 var(--container-padding);
+    background: transparent;
 }
 
 .footer__info {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    background: transparent;
 }
 
 .footer__logo {
@@ -675,12 +677,14 @@ p {
     flex-direction: column;
     gap: var(--spacing-sm);
     margin-top: var(--spacing-sm);
+    background: transparent;
 }
 
 .footer__contact-item {
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-sm);
+    background: transparent;
 }
 
 .footer__contact-item i {
@@ -690,10 +694,11 @@ p {
 }
 
 .footer__contact-item p {
-    color: var(--color-white);
+    color: var(--color-white) !important;
     font-size: 1rem;
     line-height: 1.5;
     margin: 0;
+    opacity: 0.9;
 }
 
 .footer__social {
@@ -720,6 +725,7 @@ p {
 
 .footer__hours {
     padding-top: var(--spacing-sm);
+    background: transparent;
 }
 
 .footer__hours h4 {
@@ -730,12 +736,13 @@ p {
 
 .footer__hours ul {
     list-style: none;
+    background: transparent;
 }
 
 .footer__hours li {
     margin-bottom: var(--spacing-xs);
-    color: var(--color-white);
-    opacity: 0.8;
+    color: var(--color-white) !important;
+    opacity: 0.9;
 }
 
 .footer__bottom {
@@ -743,8 +750,9 @@ p {
     padding-top: var(--spacing-md);
     margin-top: var(--spacing-lg);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--color-white);
+    color: var(--color-white) !important;
     opacity: 0.8;
+    background: transparent;
 }
 
 /* Responsive Design */
@@ -835,24 +843,41 @@ p {
     
     .footer__grid {
         grid-template-columns: 1fr;
+        background: transparent !important;
     }
     
+    .footer__info,
+    .footer__contact,
+    .footer__hours {
+        background: transparent !important;
+    }
+
     .footer__info {
         text-align: center;
     }
 
     .footer__contact-item {
         justify-content: center;
+        background: transparent !important;
+    }
+
+    .footer__contact-item p {
+        color: var(--color-white) !important;
     }
 
     .footer__social {
         justify-content: center;
+        background: transparent !important;
     }
 
     .footer__hours {
         text-align: center;
     }
-    
+
+    .footer__hours li {
+        color: var(--color-white) !important;
+    }
+
     .section__header,
     .services__grid,
     .gallery__grid {
